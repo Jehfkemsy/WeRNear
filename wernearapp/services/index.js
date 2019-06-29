@@ -32,11 +32,8 @@ async function getResources() {
     const { data } = await cloudAPI.post(endpoint, { headers });
     const payload = data.response.result;
 
-    if (payload.success) {
-      return payload.data;
-    } else {
-      return payload.message;
-    }
+    return payload;
+
   } catch (err) {
     console.error(err);
     return err;

@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   checkIn: {
     width: "90%",
     padding: 15,
-    backgroundColor: "blue",
+    backgroundColor: teal,
     marginTop: 30,
     borderRadius: 5
   },
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     color: "white"
   },
   nearby: {
-    backgroundColor: gray,
+    backgroundColor: "#fafafa",
     width: "90%",
     padding: 15,
     marginTop: 30,

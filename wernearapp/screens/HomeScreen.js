@@ -5,19 +5,11 @@ import {
   View,
   FlatList,
   Image,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity
 } from "react-native";
-
-const dummy = [
-  { availability: "Open", distance: "Got water" },
-  { availability: "Open", distance: "Got more can goods" },
-  { availability: "closed", distance: "Bannas came in" },
-  { availability: "Open", distance: "Way more can goods came in" },
-  { availability: "closed", distance: "Bannas came in" },
-  { availability: "Open", distance: "More can goods" },
-  { availability: "Open", distance: "Bannas came in" }
-];
-
+import openMap from "react-native-open-maps";
 import { Availability } from "expo-calendar";
 const { height, width } = Dimensions.get("window");
 import { getResources } from "../services";
@@ -27,45 +19,81 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
+      isLoading: true,
+      showMap: false
     };
   }
 
   componentDidMount() {
-    getResources().then(res => this.setState({ data: res }));
+    getResources().then(res => this.setState({ data: res.data }));
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 1000);
+  }
+  _goToYosemite(la, lo) {
+    openMap({ latitude: la, longitude: lo });
   }
   render() {
-    return (
-      <View style={styles.conatiner}>
-        <FlatList
-          data={dummy}
-          contentContainerStyle={styles.contentContainer}
-          renderItem={({ item }, i) => (
-            <View style={styles.card}>
-              <View>
-                <Image
-                  style={styles.logo}
-                  displayMode="contain"
-                  source={{
-                    uri:
-                      "https://cdn2.f-cdn.com/contestentries/109529/2903056/542da724ad8e4_thumb900.jpg"
-                  }}
-                />
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.mainText} key={i}>
-                  {item.availability}
-                </Text>
-                <Text style={styles.secondaryText} key={i}>
-                  {item.distance}
-                </Text>
-              </View>
-            </View>
-          )}
-          keyExtractor={(index, i) => i.toString(8)}
-        />
-      </View>
-    );
+    if (this.state.isLoading)
+      return (
+        <View style={styles.activityIn}>
+          <ActivityIndicator />
+        </View>
+      );
+    else
+      return (
+        <View style={styles.conatiner}>
+          <FlatList
+            data={this.state.data.reverse()}
+            contentContainerStyle={styles.contentContainer}
+            renderItem={({ item }, i) => {
+              console.log(item);
+              return (
+                <View style={styles.card}>
+                  <View style={styles.description}>
+                    <Text style={styles.mainText} key={i}>
+                      {item.provider_name}
+                    </Text>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: "#6DC9C4",
+                        padding: 5,
+                        paddingLeft: 15,
+                        paddingRight: 15,
+                        borderRadius: 5
+                      }}
+                      onPress={() =>
+                        this._goToYosemite(
+                          parseInt(item.latitude),
+                          parseInt(item.longitude)
+                        )
+                      }
+                    >
+                      <Text style={{ color: "white" }}>Visit</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <Image
+                      style={styles.logo}
+                      displayMode="contain"
+                      source={{
+                        uri: item.provider_logo
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.secondaryText} key={i}>
+                      {item.resource_message}
+                    </Text>
+                  </View>
+                </View>
+              );
+            }}
+            keyExtractor={(index, i) => i.toString(8)}
+          />
+        </View>
+      );
   }
 }
 HomeScreen.navigationOptions = {
@@ -81,23 +109,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  card: {
-    flexDirection: "row",
-    height: height / 5,
-    width: width * 0.9,
-    justifyContent: "space-between",
+  activityIn: {
+    flex: 1,
     alignItems: "center",
-    borderRadius: 15,
-    borderWidth: 3,
-    borderColor: "#6DC9C4",
-    marginTop: height / 15,
-    padding: "5%"
+    justifyContent: "center"
   },
-  logo: { height: 100, width: 100 },
+  description: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row"
+  },
+  card: {
+    flexDirection: "column",
+    height: height / 2,
+    width: width * 0.9,
+    justifyContent: "space-evenly",
+    alignItems: "flex-start",
+    borderRadius: 15,
+    marginTop: height / 30
+    // backgroundColor: "#E9EBEE"
+  },
+  logo: { height: height / 2.3, width: width * 0.9 },
   contentContainer: {
     justifyContent: "center",
     alignItems: "center",
-    width: width
+    width: width,
+    paddingBottom: 20
   },
   textContainer: {
     width: "60%"
@@ -108,7 +146,7 @@ const styles = StyleSheet.create({
     color: teal
   },
   secondaryText: {
-    fontSize: 20,
-    color: teal
+    fontSize: 14,
+    color: "#000"
   }
 });
