@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Container, Item, Content, Button, Text, Input } from "native-base";
 
 export default class Auth extends Component {
@@ -30,12 +30,7 @@ export default class Auth extends Component {
           <Button
             onPress={() => this.props.navigation.navigate("Main")}
             primary
-            style={{
-              alignSelf: "center",
-              width: "100%",
-              marginTop: 30,
-              justifyContent: "center"
-            }}
+            style={styles.button}
           >
             <Text> Sign In</Text>
           </Button>
@@ -44,3 +39,19 @@ export default class Auth extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  button: {
+    alignSelf: "center",
+    width: "100%",
+    marginTop: 30,
+    justifyContent: "center",
+    backgroundColor: "#6DC9C4",
+    height: 40,
+  }
+});

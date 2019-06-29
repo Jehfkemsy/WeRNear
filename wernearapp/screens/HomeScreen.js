@@ -56,7 +56,9 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
-
+HomeScreen.navigationOptions = {
+  title: "Explore near by Stores"
+};
 const teal = "#6DC9C4";
 const purple = "#622F88";
 const gray = "#B6B6B6";

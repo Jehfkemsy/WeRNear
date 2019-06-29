@@ -1,30 +1,18 @@
 import React from "react";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Body,
-  Text
-} from "native-base";
-export default function SettingsScreen() {
+import { View, Text, StyleSheet } from "react-native";
+export default function MeshScreen() {
   return (
-    <Container>
-      <Header />
-      <Content>
-        <Card>
-          <CardItem>
-            <Body>
-              <Text>//Your text here</Text>
-            </Body>
-          </CardItem>
-        </Card>
-      </Content>
-    </Container>
+    <View style={styles.container}>
+      <Text>Hello</Text>
+    </View>
   );
 }
 
-SettingsScreen.navigationOptions = {
-  title: "app.json"
+MeshScreen.navigationOptions = {
+  title: "Join a Mesh Network"
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});

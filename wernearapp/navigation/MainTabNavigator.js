@@ -1,78 +1,104 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import React from "react";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/SafeScreen';
-import SettingsScreen from '../screens/MeshScreen';
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import SafeScreen from "../screens/SafeScreen";
+import MeshScreen from "../screens/MeshScreen";
+import MessageScreen from "../screens/MessageScreen";
 
 const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
+  web: { headerMode: "screen" },
+  default: {}
 });
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: HomeScreen
   },
   config
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: "Stores",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={Platform.OS === "ios" ? `ios-basket` : "md-basket"}
     />
-  ),
+  )
 };
 
-HomeStack.path = '';
+HomeStack.path = "";
 
-const LinksStack = createStackNavigator(
+const MessageStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Message: MessageScreen
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+MessageStack.navigationOptions = {
+  tabBarLabel: "Message",
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-text" : "md-text"}
+    />
+  )
 };
 
-LinksStack.path = '';
+MessageStack.path = "";
 
-const SettingsStack = createStackNavigator(
+const SafeStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Safe: SafeScreen
   },
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+SafeStack.navigationOptions = {
+  tabBarLabel: "Checkin",
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-checkbox" : "md-checkbox"}
+    />
+  )
 };
 
-SettingsStack.path = '';
+SafeStack.path = "";
+
+const MeshStack = createStackNavigator(
+  {
+    Mesh: MeshScreen
+  },
+  config
+);
+
+MeshStack.navigationOptions = {
+  tabBarLabel: "Meshs",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-cellular" : "md-cellular"}
+    />
+  )
+};
+
+MeshStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  SafeStack,
+  MeshStack,
+  MessageStack
 });
 
-tabNavigator.path = '';
+tabNavigator.path = "";
 
 export default tabNavigator;
