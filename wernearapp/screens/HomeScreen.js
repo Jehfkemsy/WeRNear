@@ -9,19 +9,31 @@ import {
 } from "react-native";
 
 const dummy = [
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" },
-  { availability: "Open", distance: "12 miles away" }
+  { availability: "Open", distance: "Got water" },
+  { availability: "Open", distance: "Got more can goods" },
+  { availability: "closed", distance: "Bannas came in" },
+  { availability: "Open", distance: "Way more can goods came in" },
+  { availability: "closed", distance: "Bannas came in" },
+  { availability: "Open", distance: "More can goods" },
+  { availability: "Open", distance: "Bannas came in" }
 ];
 
 import { Availability } from "expo-calendar";
 const { height, width } = Dimensions.get("window");
+import { getResources } from "../services";
 
 export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    getResources().then(res => this.setState({ data: res }));
+  }
   render() {
     return (
       <View style={styles.conatiner}>
@@ -36,7 +48,7 @@ export default class HomeScreen extends React.Component {
                   displayMode="contain"
                   source={{
                     uri:
-                      "https://cdn.pixabay.com/photo/2016/08/25/07/30/red-1618916_960_720.png"
+                      "https://cdn2.f-cdn.com/contestentries/109529/2903056/542da724ad8e4_thumb900.jpg"
                   }}
                 />
               </View>

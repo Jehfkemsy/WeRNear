@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { Container, Item, Content, Button, Text, Input } from "native-base";
+import { AsyncStorage } from "react-native";
 
 export default class Auth extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: ""
+    };
+  }
+
+  handleSubmit = async () => {
+    await AsyncStorage.setItem("username", this.state.username);
+    this.props.navigation.navigate("Main");
+  };
   render() {
     return (
       <Container
@@ -19,19 +32,13 @@ export default class Auth extends Component {
           }}
         >
           <Item regular>
-            <Input placeholder="User Name" />
+            <Input
+              placeholder="What should we call you?"
+              onChangeText={text => this.setState({ username: text })}
+              value={this.state.username}
+            />
           </Item>
-          <Item
-            regular
-            style={{ alignSelf: "center", width: "100%", marginTop: 15 }}
-          >
-            <Input placeholder="Password" />
-          </Item>
-          <Button
-            onPress={() => this.props.navigation.navigate("Main")}
-            primary
-            style={styles.button}
-          >
+          <Button onPress={this.handleSubmit} primary style={styles.button}>
             <Text> Sign In</Text>
           </Button>
         </View>
@@ -52,6 +59,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     justifyContent: "center",
     backgroundColor: "#6DC9C4",
-    height: 40,
+    height: 40
   }
 });
