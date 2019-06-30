@@ -22,16 +22,6 @@ export default class MssageScreen extends React.Component {
     );
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        {/* <Header text={this.props.chatWithUser}>
-          {this.props.inChatRoom && (
-            <TouchableOpacity onPress={this.props.backToUsers}>
-              <View style={styles.leave_button}>
-                <Text style={styles.leave_button_text}>Leave</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </Header> */}
-
         <View style={styles.body}>
           <ScrollView
             style={styles.messages}

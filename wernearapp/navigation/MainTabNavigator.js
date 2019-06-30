@@ -35,24 +35,24 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-// const MessageStack = createStackNavigator(
-//   {
-//     Message: MessageScreen
-//   },
-//   config
-// );
+const MessageStack = createStackNavigator(
+  {
+    Message: MessageScreen
+  },
+  config
+);
 
-// MessageStack.navigationOptions = {
-//   tabBarLabel: "Message",
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === "ios" ? "ios-text" : "md-text"}
-//     />
-//   )
-// };
+MessageStack.navigationOptions = {
+  tabBarLabel: "Message",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-text" : "md-text"}
+    />
+  )
+};
 
-// MessageStack.path = "";
+MessageStack.path = "";
 
 const SafeStack = createStackNavigator(
   {
@@ -73,30 +73,30 @@ SafeStack.navigationOptions = {
 
 SafeStack.path = "";
 
-// const MeshStack = createStackNavigator(
-//   {
-//     Mesh: MeshScreen
-//   },
-//   config
-// );
+const MeshStack = createStackNavigator(
+  {
+    Mesh: MeshScreen
+  },
+  config
+);
 
-// MeshStack.navigationOptions = {
-//   tabBarLabel: "Meshs",
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === "ios" ? "ios-cellular" : "md-cellular"}
-//     />
-//   )
-// };
+MeshStack.navigationOptions = {
+  tabBarLabel: "Meshs",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-cellular" : "md-cellular"}
+    />
+  )
+};
 
-// MeshStack.path = "";
+MeshStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   SafeStack,
-  // MeshStack,
-  // MessageStack
+  MeshStack,
+  MessageStack
 });
 
 tabNavigator.path = "";
